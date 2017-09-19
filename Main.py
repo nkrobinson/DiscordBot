@@ -1,11 +1,14 @@
-import Event from Event
-import SongRequest from SongRequest
+#!/usr/bin/python3
+
+# import Event from Event
+# import SongRequest from SongRequest
 
 import discord
 import asyncio
 import youtube_dl
 import sys
-import.re
+import re
+
 
 class DiscordBot(discord.Client):
 
@@ -20,10 +23,10 @@ class DiscordBot(discord.Client):
         print(self.user.id)
         print('------')
 
-    @asyncio.coroutine
-    def on_message(self,message):
+    @discord.coroutine
+    def on_message(self, message):
         if message.content.startswith('!'):
-            messageSplit = re.split(" ",message.content)
+            messageSplit = re.split(" ", message.content)
             if messageSplit[0] == '!test':
                 counter = 0
                 tmp = await self.send_message(message.channel, 'Calculating messages...')
@@ -31,31 +34,40 @@ class DiscordBot(discord.Client):
                     if log.author == message.author:
                         counter += 1
 
-                await self.edit_message(tmp, 'You have {} messages.'.format(counter))
+                await self.edit_message(
+                    tmp, 'You have {} messages.'.format(counter)
+                )
             elif messageSplit[0] == '!sleep':
                 await asyncio.sleep(5)
-                await self.send_message(message.channel, 'Done sleeping')
+                await self.send_message(message.channel, 'Done Sleeping')
             elif messageSplit[0] == '!play':
                 if messageSplit[1] == 'queue':
-                    #Play queue
+                    # Play queue
+                    await self.send_message(message.channel, 'Added to Queue')
                     pass
                 elif messageSplit[1] == 'remove':
-                    #Play remove 'queue index'
+                    # Play remove 'queue index'
+                    await self.send_message(message.channel,
+                                            'Removed from Queue')
                     pass
                 else:
-                    #Play 'url'
+                    # Play 'url'
+                    await self.send_message(message.channel, 'Playing')
                     pass
 
                 pass
-            elif messageSplit[0] == '!event': #Events
+            elif messageSplit[0] == '!event':  # Events
                 if messageSplit[1] == 'cancel':
-                    #Event cancel 'id'
+                    # Event cancel 'id'
+                    await self.send_message(message.channel, 'Cancelled Event')
                     pass
                 elif messageSplit[1] == 'set':
-                    #Event set 'Title' 'Time' 'Date'
+                    # Event set 'Title' 'Time' 'Date'
+                    await self.send_message(message.channel, 'New Event')
                     pass
                 else:
-                    #Event
+                    # Event
+                    await self.send_message(message.channel, 'Current Event')
                     pass
                 pass
 

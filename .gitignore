@@ -90,3 +90,6 @@ ENV/
 
 # VSCode settings
 .vscode
+
+# Project Specific Settings
+run.sh

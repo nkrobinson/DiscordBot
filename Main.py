@@ -25,9 +25,9 @@ class DiscordBot(discord.Client):
     async def on_message(self, message):
         if message.content.startswith('!'):
             messageSplit = re.split(" ", message.content)
-            if messageSplit[0] == '!test':
+            if messageSplit[0].lower() == '!test':
                 await self.send_message(message.channel, 'Test reply')
-            elif messageSplit[0] == '!count':
+            elif messageSplit[0].lower() == '!count':
                 counter = 0
                 tmp = await self.send_message(message.channel, 'Calculating messages...')
                 async for log in self.logs_from(message.channel, limit=100):
@@ -37,10 +37,10 @@ class DiscordBot(discord.Client):
                 await self.edit_message(
                     tmp, 'You have {} messages.'.format(counter)
                 )
-            elif messageSplit[0] == '!sleep':
+            elif messageSplit[0].lower() == '!sleep':
                 await asyncio.sleep(5)
                 await self.send_message(message.channel, 'Done Sleeping')
-            elif messageSplit[0] == '!play':
+            elif messageSplit[0].lower() == '!play':
                 try:
                     if messageSplit[1] == 'queue':
                         # Play queue
@@ -51,7 +51,7 @@ class DiscordBot(discord.Client):
                 except:
                     # Play 'url'
                     await self.send_message(message.channel, 'Playing')
-            elif messageSplit[0] == '!event':  # Events
+            elif messageSplit[0].lower() == '!event':  # Events
                 try:
                     if messageSplit[1] == 'cancel':
                         # Event cancel 'id'

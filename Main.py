@@ -23,7 +23,7 @@ class DiscordBot(discord.Client):
         print('------')
 
     async def on_message(self, message):
-        if message.content.startswith('!'):
+        if message.content[0] == "!":
             messageSplit = re.split(" ", message.content)
             if messageSplit[0].lower() == '!test':
                 await self.send_message(message.channel, 'Test reply')

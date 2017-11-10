@@ -5,7 +5,7 @@
 
 import discord
 import asyncio
-# import youtube_dl
+import youtube_dl
 import sys
 import re
 
@@ -42,13 +42,24 @@ class DiscordBot(discord.Client):
                 await self.send_message(message.channel, 'Done Sleeping')
             elif messageSplit[0].lower() == '!play':
                 try:
-                    if messageSplit[1] == 'queue':
-                        # Play queue
-                        await self.send_message(message.channel, 'Added to Queue')
-                    elif messageSplit[1] == 'remove':
+                    if messageSplit[1] == 'remove':
                         # Play remove 'queue index'
                         await self.send_message(message.channel, 'Removed from Queue')
-                except:
+                    else:
+                        url = messageSplit[1]
+                        await self.send_message(message.channel, 'Got URL')
+                        # if not check(url):
+                        #     await self.send_message(message.channel, 'URL not valid')
+                        try:
+                            self.voice = await self.join_voice_channel(message.author.voice.voice_channel)
+                        except:
+                            self.voice.move_to(message.author.voice.voice_channel)
+                        await self.send_message(message.channel, 'Created Voice')
+                        player = await self.voice.create_ytdl_player(url)
+                        await self.send_message(message.channel, 'Created Player')
+                        player.start()
+                        await self.send_message(message.channel, 'Playing')
+                except IndexError:
                     # Play 'url'
                     await self.send_message(message.channel, 'Playing')
             elif messageSplit[0].lower() == '!event':  # Events
